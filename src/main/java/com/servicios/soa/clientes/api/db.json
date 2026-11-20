@@ -111,36 +111,6 @@
       "id": "bb808ec1-0c63-4cf6-bdcc-f1aa59a6291a"
     },
     {
-      "tipo_documento": "DNI",
-      "numero_documento": "44627370",
-      "nombres": "Ana Perez Prueba",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.1795204627370@example.com",
-      "rol": "remitente",
-      "id": "b0eb1fb4-dc6f-493f-9d8b-5651933d1203"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44628117",
-      "nombres": "Ana Perez Prueba",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.1795204628117@example.com",
-      "rol": "remitente",
-      "id": "70248d45-4879-49f9-b028-e25559aa6977"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44699777",
-      "nombres": "Ana Perez Prueba",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.1795204699777@example.com",
-      "rol": "remitente",
-      "id": "14c6fba2-97d8-4d0b-8fd1-3f5561e10ba7"
-    },
-    {
       "direccion": "Av. Pacifico 789",
       "numero_documento": "44571481",
       "rol": "remitente",
@@ -164,7 +134,7 @@
       "tipo_documento": "DNI",
       "numero_documento": "76855123",
       "nombres": "Elihel Adriano Ramos Alva",
-      "direccion": "Mz El acero L5A",
+      "direccion": "Mz. El acero L5A",
       "telefono": "960264651",
       "correo": "cualquiera@gmail.com",
       "rol": "remitente",
@@ -172,13 +142,23 @@
     },
     {
       "tipo_documento": "DNI",
-      "numero_documento": "44495245",
+      "numero_documento": "44778751",
       "nombres": "Ana Perez Actualizada",
       "direccion": "Calle Principal 123",
       "telefono": "912345678",
-      "correo": "ana.495245@example.com",
+      "correo": "ana.778751@example.com",
       "rol": "remitente",
-      "id": "f513aaf6-e910-4c94-a234-6dbab01881bd"
+      "id": "ec0d0cea-117b-438e-a132-e25cd0257020"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "45891234",
+      "nombres": "Carlos Mendoza Ruiz",
+      "direccion": "Av. Pardo 450, Chimbote",
+      "telefono": "943123456",
+      "correo": "carlos.mendoza@example.com",
+      "rol": "remitente",
+      "id": "45e03df1-e3ce-4de6-b82d-def3111491ba"
     }
   ],
   "envios": [
@@ -190,7 +170,10 @@
       "linea_negocio": "Encomienda",
       "origen": "Chimbote",
       "destino": "Lima",
-      "id": "WkiEsOCzNCQ"
+      "id": "WkiEsOCzNCQ",
+      "estado": "ENTREGADO",
+      "simulacion_log": "Estado actualizado a ENTREGADO",
+      "ida_vuelta": false
     },
     {
       "id_remitente": "1313131313",
@@ -200,7 +183,10 @@
       "linea_negocio": "Encomienda",
       "origen": "Chimbote",
       "destino": "Lima",
-      "id": "PTSBzZd7DcM"
+      "id": "PTSBzZd7DcM",
+      "estado": "ENTREGADO",
+      "simulacion_log": "Estado actualizado a ENTREGADO",
+      "ida_vuelta": false
     },
     {
       "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
@@ -211,7 +197,26 @@
       "origen": "Lima",
       "destino": "Cusco",
       "id": "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
-      "estado": "registrado"
+      "estado": "REGISTRADO",
+      "simulacion_log": "Estado actualizado a ENTREGADO",
+      "ida_vuelta": false,
+      "servicio": "ESTANDAR",
+      "zona": "NACIONAL"
+    },
+    {
+      "id_remitente": "ccf87811-e354-44de-8d9d-dd29bb638b24",
+      "id_destinatario": "20b517f9-c4a3-4d1f-8016-bae08d4728eb",
+      "peso_kg": 1.5,
+      "contenido": "mensaje",
+      "linea_negocio": "Personal",
+      "origen": "Av. 124, Laureles, B",
+      "destino": "Mz. El acero L5A",
+      "id": "b46cfe55-6cd4-4138-a0e6-2c803b554f3d",
+      "estado": "REGISTRADO",
+      "simulacion_log": "Estado actualizado a ENTREGADO",
+      "ida_vuelta": false,
+      "servicio": "ESTANDAR",
+      "zona": "NACIONAL"
     }
   ],
   "contenidos_prohibidos": [
@@ -460,6 +465,12 @@
       "categoria": "Ilícitos y patrimonio",
       "palabra_clave": "patrimonio cultural",
       "activo": true
+    },
+    {
+      "palabra_clave": "edson loli",
+      "descripcion": "material peligroso",
+      "activo": true,
+      "id": "chA6YIJhnWg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
