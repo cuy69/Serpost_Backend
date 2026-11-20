@@ -115,10 +115,20 @@ La respuesta contiene `tarifa_base`, `recargos`, `igv`, `tarifa_total` y `moneda
 
 Para habilitar tarifas, configura `serpost.tarifas.reglas` en `application.yml` o en la configuración externa de Spring Boot. Cada regla requiere `linea-negocio`, `origen`, `destino`, `tipo-servicio`, `peso-min-kg`, `peso-max-kg`, `tarifa-base`, `recargos`, `tasa-igv` y `moneda`. Los límites de peso son inclusivos; base y recargos son importes monetarios, e IGV es un porcentaje aplicado a su suma. La moneda debe indicarse explícitamente en cada regla. Si más de una regla coincide con una solicitud, el tarifario está ambiguo y debe corregirse.
 
-Para probar tarifas localmente sin un proveedor OAuth, inicia con el perfil `local` usando `mvn spring-boot:run "-Dspring-boot.run.profiles=local"`. Este perfil permite el `POST /tarifas/calculos` sin token y limita el servidor a `127.0.0.1`; las demás rutas siguen requiriendo autenticación. No actives este perfil en producción. En Postman selecciona **No Auth** para esa prueba.
+Para probar tarifas y notificaciones localmente sin un proveedor OAuth, inicia con el perfil `local` usando `mvn spring-boot:run "-Dspring-boot.run.profiles=local"`. Este perfil permite registrar clientes, calcular tarifas y crear/consultar notificaciones sin token, y limita el servidor a `127.0.0.1`; las demás rutas siguen requiriendo autenticación. No actives este perfil en producción. En Postman selecciona **No Auth** para esas pruebas.
 
 - `400 Bad Request`: campos obligatorios ausentes, línea de negocio no admitida o peso no positivo.
 - `401 Unauthorized`: falta un token Bearer válido.
 - `403 Forbidden`: el token no tiene el scope o rol requerido.
 - `404 Not Found`: no existe una regla para la línea, peso, origen, destino y tipo de servicio solicitados.
+
+## Enviar y consultar notificaciones
+
+- `POST /notificaciones` acepta avisos y devuelve `202 Accepted` con `notificacion_id`, `estado` y `fecha_envio`. El estado inicial es `pendiente`; consulta `GET /notificaciones/{notificacion_id}` para ver el resultado del procesamiento asíncrono.
+- Los tipos admitidos son `correccion_datos`, `restriccion_contenido` y `problema_pago`; los canales son `correo`, `sms` y `mensajeria`. Correo usa el email del cliente; SMS y mensajería usan su teléfono.
+- `campos_invalidos` es obligatorio para correcciones. Para restricciones y problemas de pago son obligatorios `envio_id` y `motivo`. Cuando se omite `mensaje`, se genera una plantilla en español.
+- Si se proporciona `envio_id`, se valida mediante `SERPOST_ENVIOS_BASE_URL` (por defecto `http://127.0.0.1:3001`). Inicia el API JSON con `npm start` desde `src/main/java/com/servicios/soa/clientes/api`.
+- En perfil `local`, el adaptador simula la entrega y no envía correo, SMS ni mensajes reales. Fuera de ese perfil no se ha configurado un proveedor: `POST` devuelve `503` con el ID creado y estado `pendiente`, y las notificaciones se reintentan hasta el límite `serpost.notificaciones.reintentos.maximo` (por defecto 3). Consulta el ID para revisar el estado; los intentos se auditan en la base de datos.
+- El contrato actual registra los campos inválidos y los intentos, pero no incluye valores anteriores/nuevos de los datos corregidos; para auditar versiones de datos (RNF-04.2) se debe ampliar la solicitud con esas versiones.
+- El perfil local permite `POST /clientes` para crear el cliente de prueba. Usa el `id_cliente` de la respuesta en la notificación. Todas estas excepciones de seguridad local solo aplican al perfil `local`.
 

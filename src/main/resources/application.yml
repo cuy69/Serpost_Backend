@@ -22,6 +22,12 @@ server:
       forwarded:
         strategy: framework
 serpost:
+  envios:
+    base-url: ${SERPOST_ENVIOS_BASE_URL:http://127.0.0.1:3001}
+  notificaciones:
+    intervalo-procesamiento-ms: 250
+    reintentos:
+      maximo: 3
   tarifas:
     reglas:
       - linea-negocio: Encomienda
