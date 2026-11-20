@@ -17,4 +17,26 @@ spring:
           issuer-uri: ${OAUTH_ISSUER_URI:https://issuer.example}
 server:
   port: ${PORT:8080}
-  forward-headers-strategy: framework
+  request:
+    header:
+      forwarded:
+        strategy: framework
+serpost:
+  envios:
+    base-url: ${SERPOST_ENVIOS_BASE_URL:http://127.0.0.1:3001}
+  notificaciones:
+    intervalo-procesamiento-ms: 250
+    reintentos:
+      maximo: 3
+  tarifas:
+    reglas:
+      - linea-negocio: Encomienda
+        origen: Chimbote
+        destino: Lima
+        tipo-servicio: Estándar
+        peso-min-kg: 0.1
+        peso-max-kg: 5.0
+        tarifa-base: 10.00
+        recargos: 2.00
+        tasa-igv: 18
+        moneda: PEN
