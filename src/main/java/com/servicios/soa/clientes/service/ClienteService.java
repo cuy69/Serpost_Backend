@@ -4,6 +4,7 @@ import com.servicios.soa.clientes.api.dto.ClienteRequest;
 import com.servicios.soa.clientes.api.dto.ClienteResponse;
 import com.servicios.soa.clientes.model.Cliente;
 import com.servicios.soa.clientes.repository.ClienteRepository;
+import org.jspecify.annotations.NonNull;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +39,7 @@ public class ClienteService {
     }
 
     @Transactional(readOnly = true)
-    public Cliente consultar(UUID idCliente) {
+    public Cliente consultar(@NonNull UUID idCliente) {
         return repository.findById(idCliente).orElseThrow(ClienteNotFoundException::new);
     }
 

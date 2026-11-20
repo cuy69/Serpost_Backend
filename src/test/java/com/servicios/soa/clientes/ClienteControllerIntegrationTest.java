@@ -4,8 +4,8 @@ import com.servicios.soa.clientes.repository.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static java.util.Objects.requireNonNull;
 
 @SpringBootTest(properties = "spring.security.oauth2.resourceserver.jwt.issuer-uri=https://issuer.example")
 @AutoConfigureMockMvc
@@ -50,15 +51,15 @@ class ClienteControllerIntegrationTest {
                 """;
 
         String response = mockMvc.perform(post("/clientes")
-                        .with(jwt())
-                        .contentType(APPLICATION_JSON)
+                        .with(requireNonNull(jwt()))
+                        .contentType(requireNonNull(APPLICATION_JSON))
                         .content(cliente))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.estado").value("registrado"))
                 .andReturn().getResponse().getContentAsString();
         String id = com.jayway.jsonpath.JsonPath.read(response, "$.id_cliente");
 
-        mockMvc.perform(get("/clientes/{id_cliente}", id).with(jwt()))
+        mockMvc.perform(get("/clientes/{id_cliente}", id).with(requireNonNull(jwt())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.numero_documento").value("46821357"))
                 .andExpect(jsonPath("$.rol").value("remitente"));
@@ -75,8 +76,8 @@ class ClienteControllerIntegrationTest {
                 }
                 """;
         mockMvc.perform(put("/clientes/{id_cliente}", id)
-                        .with(jwt())
-                        .contentType(APPLICATION_JSON)
+                        .with(requireNonNull(jwt()))
+                        .contentType(requireNonNull(APPLICATION_JSON))
                         .content(actualizacion))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id_cliente").value(id))
@@ -96,9 +97,11 @@ class ClienteControllerIntegrationTest {
                 }
                 """;
 
-        mockMvc.perform(post("/clientes").with(jwt()).contentType(APPLICATION_JSON).content(cliente))
+        mockMvc.perform(post("/clientes").with(requireNonNull(jwt()))
+                .contentType(requireNonNull(APPLICATION_JSON)).content(cliente))
                 .andExpect(status().isCreated());
-        mockMvc.perform(post("/clientes").with(jwt()).contentType(APPLICATION_JSON).content(cliente))
+        mockMvc.perform(post("/clientes").with(requireNonNull(jwt()))
+                        .contentType(requireNonNull(APPLICATION_JSON)).content(cliente))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status").value(409));
     }
@@ -111,8 +114,8 @@ class ClienteControllerIntegrationTest {
 
     @Test
     void validaCamposObligatorios() throws Exception {
-        mockMvc.perform(post("/clientes").with(jwt())
-                        .contentType(APPLICATION_JSON)
+        mockMvc.perform(post("/clientes").with(requireNonNull(jwt()))
+                        .contentType(requireNonNull(APPLICATION_JSON))
                         .content("{\"tipo_documento\":\"DNI\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.campos.nombres").exists());

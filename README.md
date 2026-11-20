@@ -97,3 +97,28 @@ La API local de Postman se ejecuta desde `src/main/java/com/servicios/soa/client
 
 La lista JSON inicial contiene las palabras clave de las seis categorías de contenido prohibido.
 
+## Calcular tarifa de envío
+
+`POST /tarifas/calculos` (versión `1.0.0`) calcula el desglose de una tarifa con el tarifario configurado. Requiere un JWT Bearer válido con el scope `atencion_cliente` o la autoridad `ROLE_ATENCION_CLIENTE`; como el resto de la API, debe exponerse mediante HTTPS en producción.
+
+```json
+{
+  "linea_negocio": "Encomienda",
+  "peso_kg": 2.5,
+  "origen": "Chimbote",
+  "destino": "Lima",
+  "tipo_servicio": "Estándar"
+}
+```
+
+La respuesta contiene `tarifa_base`, `recargos`, `igv`, `tarifa_total` y `moneda`. El catálogo inicia vacío intencionalmente; una solicitud sin una regla aplicable devuelve `404` y no se asignan tarifas de ejemplo.
+
+Para habilitar tarifas, configura `serpost.tarifas.reglas` en `application.yml` o en la configuración externa de Spring Boot. Cada regla requiere `linea-negocio`, `origen`, `destino`, `tipo-servicio`, `peso-min-kg`, `peso-max-kg`, `tarifa-base`, `recargos`, `tasa-igv` y `moneda`. Los límites de peso son inclusivos; base y recargos son importes monetarios, e IGV es un porcentaje aplicado a su suma. La moneda debe indicarse explícitamente en cada regla. Si más de una regla coincide con una solicitud, el tarifario está ambiguo y debe corregirse.
+
+Para probar tarifas localmente sin un proveedor OAuth, inicia con el perfil `local` usando `mvn spring-boot:run "-Dspring-boot.run.profiles=local"`. Este perfil permite el `POST /tarifas/calculos` sin token y limita el servidor a `127.0.0.1`; las demás rutas siguen requiriendo autenticación. No actives este perfil en producción. En Postman selecciona **No Auth** para esa prueba.
+
+- `400 Bad Request`: campos obligatorios ausentes, línea de negocio no admitida o peso no positivo.
+- `401 Unauthorized`: falta un token Bearer válido.
+- `403 Forbidden`: el token no tiene el scope o rol requerido.
+- `404 Not Found`: no existe una regla para la línea, peso, origen, destino y tipo de servicio solicitados.
+
