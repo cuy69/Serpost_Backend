@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@tinyhttp/app": "^3.0.14",
+    "json-server": "^1.0.0-beta.15",
+    "milliparsec": "^5.1.0"
+  }
+}
