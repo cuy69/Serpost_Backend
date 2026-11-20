@@ -159,6 +159,26 @@
       "correo": "eloli@gmail.com",
       "rol": "remitente",
       "id": "ccf87811-e354-44de-8d9d-dd29bb638b24"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "76855123",
+      "nombres": "Elihel Adriano Ramos Alva",
+      "direccion": "Mz El acero L5A",
+      "telefono": "960264651",
+      "correo": "cualquiera@gmail.com",
+      "rol": "remitente",
+      "id": "20b517f9-c4a3-4d1f-8016-bae08d4728eb"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "44495245",
+      "nombres": "Ana Perez Actualizada",
+      "direccion": "Calle Principal 123",
+      "telefono": "912345678",
+      "correo": "ana.495245@example.com",
+      "rol": "remitente",
+      "id": "f513aaf6-e910-4c94-a234-6dbab01881bd"
     }
   ],
   "envios": [
