@@ -40,3 +40,11 @@ serpost:
         recargos: 2.00
         tasa-igv: 18
         moneda: PEN
+services:
+  envios:
+    base-url: ${ENVIOS_BASE_URL:http://localhost:3001}
+  cobros:
+    base-url: ${COBROS_BASE_URL:http://127.0.0.1:8080}
+  guias:
+    tracking-base-url: ${GUIAS_TRACKING_BASE_URL:http://localhost:8080/guias}
+    database-path: ${GUIAS_DB_PATH:src/main/java/com/servicios/soa/clientes/api/guias.json}

@@ -1,0 +1,9 @@
+{
+  "guias" : [ {
+    "id_envio" : "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
+    "id_cobro" : "a6cb2e87-f458-490a-a782-a0875d0cc268",
+    "codigo_guia" : "SPE926CA71F9EE4FC1",
+    "url_seguimiento" : "http://127.0.0.1:8080/guias/SPE926CA71F9EE4FC1",
+    "fecha_emision" : "2026-11-20T22:22:24.834625300Z"
+  } ]
+}

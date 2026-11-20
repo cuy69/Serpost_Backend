@@ -1,8 +1,11 @@
 package com.servicios.soa.clientes.api;
 
 import com.servicios.soa.clientes.api.dto.ApiError;
+import com.servicios.soa.clientes.cobros.service.CobroException;
 import com.servicios.soa.clientes.service.ClienteDuplicadoException;
 import com.servicios.soa.clientes.service.ClienteNotFoundException;
+import com.servicios.soa.clientes.guias.service.GuiaServiceException;
+import com.servicios.soa.clientes.guias.service.GuiaNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -42,6 +45,21 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ClienteDuplicadoException.class)
     public ResponseEntity<ApiError> handleDuplicate(ClienteDuplicadoException exception) {
         return response(HttpStatus.CONFLICT, exception.getMessage(), Map.of());
+    }
+
+    @ExceptionHandler(GuiaServiceException.class)
+    public ResponseEntity<ApiError> handleGuiaService(GuiaServiceException exception) {
+        return response(exception.getStatus(), exception.getMessage(), Map.of());
+    }
+
+    @ExceptionHandler(GuiaNotFoundException.class)
+    public ResponseEntity<ApiError> handleGuiaNotFound(GuiaNotFoundException exception) {
+        return response(HttpStatus.NOT_FOUND, exception.getMessage(), Map.of());
+    }
+
+    @ExceptionHandler(CobroException.class)
+    public ResponseEntity<ApiError> handleCobro(CobroException exception) {
+        return response(exception.getStatus(), exception.getMessage(), Map.of());
     }
 
     private ResponseEntity<ApiError> response(HttpStatus status, String message, Map<String, String> fields) {

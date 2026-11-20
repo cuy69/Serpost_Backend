@@ -19,6 +19,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/tarifas/calculos")
                         .hasAnyAuthority("SCOPE_atencion_cliente", "ROLE_ATENCION_CLIENTE")
+                        .requestMatchers(HttpMethod.POST, "/cobros")
+                        .hasAnyAuthority("SCOPE_cajero", "ROLE_CAJERO",
+                                "SCOPE_servicio_autorizado", "ROLE_SERVICIO_AUTORIZADO")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()))
                 .build();

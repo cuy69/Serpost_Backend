@@ -21,6 +21,10 @@ public class LocalTarifaSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
                         .requestMatchers(HttpMethod.POST, "/notificaciones").permitAll()
                         .requestMatchers(HttpMethod.GET, "/notificaciones/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/cobros").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cobros/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/guias").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/guias/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(resourceServer -> resourceServer.jwt(Customizer.withDefaults()))
                 .build();
