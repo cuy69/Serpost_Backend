@@ -1,0 +1,38 @@
+{
+  "groups": [
+    {
+      "name": "services",
+      "type": "java.lang.Object"
+    },
+    {
+      "name": "services.envios",
+      "type": "java.lang.Object"
+    },
+    {
+      "name": "services.cobros",
+      "type": "java.lang.Object"
+    },
+    {
+      "name": "services.guias",
+      "type": "java.lang.Object"
+    }
+  ],
+  "properties": [
+    {
+      "name": "services.envios.base-url",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "services.cobros.base-url",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "services.guias.tracking-base-url",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "services.guias.database-path",
+      "type": "java.lang.String"
+    }
+  ]
+}
