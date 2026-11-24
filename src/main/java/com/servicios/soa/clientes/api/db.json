@@ -159,6 +159,16 @@
       "correo": "carlos.mendoza@example.com",
       "rol": "remitente",
       "id": "45e03df1-e3ce-4de6-b82d-def3111491ba"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "44142969",
+      "nombres": "Ana Perez Actualizada",
+      "direccion": "Calle Principal 123",
+      "telefono": "912345678",
+      "correo": "ana.142969@example.com",
+      "rol": "remitente",
+      "id": "80f2bbd0-2925-44bf-98ae-07f52548f6f1"
     }
   ],
   "envios": [
