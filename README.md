@@ -21,6 +21,8 @@ Si la variable no se define, la aplicación usa un valor de respaldo `https://is
 
 Para iniciar el API simulado que persiste en `db.json` y rechaza solicitudes duplicadas, ejecuta desde `src/main/java/com/servicios/soa/clientes/api`:
 
+cd src\main\java\com\servicios\soa\clientes\api
+
 ```powershell
 npm start
 ```
