@@ -206,17 +206,18 @@
     {
       "id_remitente": "ccf87811-e354-44de-8d9d-dd29bb638b24",
       "id_destinatario": "20b517f9-c4a3-4d1f-8016-bae08d4728eb",
-      "peso_kg": 1.5,
+      "peso_kg": 6.7,
       "contenido": "mensaje",
       "linea_negocio": "Personal",
       "origen": "Av. 124, Laureles, B",
       "destino": "Mz. El acero L5A",
       "id": "b46cfe55-6cd4-4138-a0e6-2c803b554f3d",
-      "estado": "REGISTRADO",
+      "estado": "COTIZADO",
       "simulacion_log": "Estado actualizado a ENTREGADO",
       "ida_vuelta": false,
       "servicio": "ESTANDAR",
-      "zona": "NACIONAL"
+      "zona": "NACIONAL",
+      "tarifa_total": 49.34
     },
     {
       "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
@@ -227,7 +228,11 @@
       "origen": "Lima",
       "destino": "Cusco",
       "id": "20e7daab-552e-454f-bd7f-a6b06e05bf8d",
-      "estado": "registrado"
+      "estado": "COTIZADO",
+      "servicio": "ESTANDAR",
+      "zona": "NACIONAL",
+      "ida_vuelta": false,
+      "tarifa_total": 27.66
     },
     {
       "id_remitente": "a1111111-1111-4111-8111-111111111111",
