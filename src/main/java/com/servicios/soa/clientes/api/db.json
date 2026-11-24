@@ -199,14 +199,13 @@
       "ida_vuelta": false
     },
     {
-      "estado": "COTIZADO",
+      "estado": "REGISTRADO",
       "id": "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
       "peso_kg": 2.5,
       "destino": "Lima Cercado 101",
       "servicio": "ESTANDAR",
       "zona": "NACIONAL",
-      "ida_vuelta": false,
-      "tarifa_total": 27.66
+      "ida_vuelta": false
     },
     {
       "estado": "ENTREGADO",
@@ -221,11 +220,10 @@
       "origen": "Lima",
       "destino": "Cusco",
       "id": "20e7daab-552e-454f-bd7f-a6b06e05bf8d",
-      "estado": "COTIZADO",
+      "estado": "REGISTRADO",
       "servicio": "ESTANDAR",
       "zona": "NACIONAL",
-      "ida_vuelta": false,
-      "tarifa_total": 27.66
+      "ida_vuelta": false
     },
     {
       "id_remitente": "a1111111-1111-4111-8111-111111111111",
@@ -236,7 +234,10 @@
       "origen": "Lima",
       "destino": "Arequipa",
       "id": "a6362bb5-8435-4ff6-9c98-9913aff6fcbc",
-      "estado": "registrado"
+      "estado": "REGISTRADO",
+      "servicio": "ESTANDAR",
+      "zona": "NACIONAL",
+      "ida_vuelta": false
     },
     {
       "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
@@ -247,7 +248,11 @@
       "origen": "Chimbote",
       "destino": "Lima",
       "id": "a0ba1de7-4cee-4b18-ac2e-020f5b9fccd2",
-      "estado": "registrado"
+      "estado": "COTIZADO",
+      "servicio": "ESTANDAR",
+      "zona": "NACIONAL",
+      "ida_vuelta": false,
+      "tarifa_total": 27.66
     }
   ],
   "contenidos_prohibidos": [
