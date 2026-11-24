@@ -310,6 +310,17 @@
       "destino": "Lima",
       "id": "a0ba1de7-4cee-4b18-ac2e-020f5b9fccd2",
       "estado": "registrado"
+    },
+    {
+      "id_remitente": "141fb943-a738-45ed-8c60-5ffea175612b",
+      "id_destinatario": "537af3be-89c4-4b83-8dd3-e2d20cb9519b",
+      "peso_kg": 2.5,
+      "contenido": "No me  lo vas a creer",
+      "linea_negocio": "Encomienda",
+      "origen": "Av. Pacifico 789",
+      "destino": "La perla 234",
+      "id": "c4250043-e13b-4eae-8fbc-b96873f812f7",
+      "estado": "registrado"
     }
   ],
   "contenidos_prohibidos": [
