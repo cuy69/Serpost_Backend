@@ -149,77 +149,6 @@
       "correo": "ana.778751@example.com",
       "rol": "remitente",
       "id": "ec0d0cea-117b-438e-a132-e25cd0257020"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "45891234",
-      "nombres": "Carlos Mendoza Ruiz",
-      "direccion": "Av. Pardo 450, Chimbote",
-      "telefono": "943123456",
-      "correo": "carlos.mendoza@example.com",
-      "rol": "remitente",
-      "id": "45e03df1-e3ce-4de6-b82d-def3111491ba"
-
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44142969",
-      "nombres": "Ana Perez Actualizada",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.142969@example.com",
-      "rol": "remitente",
-      "id": "80f2bbd0-2925-44bf-98ae-07f52548f6f1"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "77286474",
-      "nombres": "Leonardo Lolo Tavera Anton",
-      "direccion": "Calle Los Pinos 123",
-      "telefono": "923907528",
-      "correo": "Elmasrapido@gmail.com",
-      "rol": "remitente",
-      "id": "56298832-77dc-4135-87e5-90732ff43c39"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "20202021",
-      "nombres": "Jose Agustino Leon Valderrama",
-      "direccion": "Av Dragon del ma 124",
-      "telefono": "975647875",
-      "correo": "Eduadro@gmail.com",
-      "rol": "destinatario",
-      "id": "cc6ec6e6-5cce-4eba-84cf-5a92247f292c"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "47895125",
-      "nombres": "Eli Vali Nostradamus Opordios",
-      "direccion": "La perla 234",
-      "telefono": "977811245",
-      "correo": "Leonardito@gmail.com",
-      "rol": "destinatario",
-      "id": "537af3be-89c4-4b83-8dd3-e2d20cb9519b"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44501288",
-      "nombres": "Ana Perez Actualizada",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.501288@example.com",
-      "rol": "remitente",
-      "id": "2f6dc341-dd38-4dfd-827f-1e6621223b8e"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44503143",
-      "nombres": "Ana Perez Actualizada",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.503143@example.com",
-      "rol": "remitente",
-      "id": "e344c2ad-3a5a-49ea-bc0d-bfd2ac45f313"
     }
   ],
   "envios": [
@@ -250,35 +179,18 @@
       "ida_vuelta": false
     },
     {
-      "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
-      "id_destinatario": "a1957e60-826e-4f4c-9a52-53ec0f9a8b21",
-      "peso_kg": 2.5,
-      "contenido": "Libros escolares",
-      "linea_negocio": "Personal",
-      "origen": "Lima",
-      "destino": "Cusco",
-      "id": "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
-      "estado": "REGISTRADO",
-      "simulacion_log": "Estado actualizado a ENTREGADO",
-      "ida_vuelta": false,
-      "servicio": "ESTANDAR",
-      "zona": "NACIONAL"
-    },
-    {
-      "id_remitente": "ccf87811-e354-44de-8d9d-dd29bb638b24",
-      "id_destinatario": "20b517f9-c4a3-4d1f-8016-bae08d4728eb",
-      "peso_kg": 6.7,
-      "contenido": "mensaje",
-      "linea_negocio": "Personal",
-      "origen": "Av. 124, Laureles, B",
-      "destino": "Mz. El acero L5A",
-      "id": "b46cfe55-6cd4-4138-a0e6-2c803b554f3d",
       "estado": "COTIZADO",
-      "simulacion_log": "Estado actualizado a ENTREGADO",
-      "ida_vuelta": false,
+      "id": "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
+      "peso_kg": 2.5,
+      "destino": "Lima Cercado 101",
       "servicio": "ESTANDAR",
       "zona": "NACIONAL",
-      "tarifa_total": 49.34
+      "ida_vuelta": false,
+      "tarifa_total": 27.66
+    },
+    {
+      "estado": "ENTREGADO",
+      "id": "b46cfe55-6cd4-4138-a0e6-2c803b554f3d"
     },
     {
       "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
@@ -315,17 +227,6 @@
       "origen": "Chimbote",
       "destino": "Lima",
       "id": "a0ba1de7-4cee-4b18-ac2e-020f5b9fccd2",
-      "estado": "registrado"
-    },
-    {
-      "id_remitente": "141fb943-a738-45ed-8c60-5ffea175612b",
-      "id_destinatario": "537af3be-89c4-4b83-8dd3-e2d20cb9519b",
-      "peso_kg": 2.5,
-      "contenido": "No me  lo vas a creer",
-      "linea_negocio": "Encomienda",
-      "origen": "Av. Pacifico 789",
-      "destino": "La perla 234",
-      "id": "c4250043-e13b-4eae-8fbc-b96873f812f7",
       "estado": "registrado"
     }
   ],
@@ -581,6 +482,9 @@
       "descripcion": "material peligroso",
       "activo": true,
       "id": "chA6YIJhnWg"
+    },
+    {
+      "id": "FxvZY6RG8s4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
