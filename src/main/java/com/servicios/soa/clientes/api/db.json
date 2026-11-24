@@ -149,6 +149,26 @@
       "correo": "ana.778751@example.com",
       "rol": "remitente",
       "id": "ec0d0cea-117b-438e-a132-e25cd0257020"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "45217586",
+      "nombres": "Luis Arturo Felipe Ogregon",
+      "direccion": "Av. Perú 200",
+      "telefono": "923656700",
+      "correo": "Luisvisual@gmail.com",
+      "rol": "remitente",
+      "id": "7cad69d8-0104-4cfc-8ffe-358ba946f72c"
+    },
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "44138213",
+      "nombres": "Ana Perez Actualizada",
+      "direccion": "Calle Principal 123",
+      "telefono": "912345678",
+      "correo": "ana.138213@example.com",
+      "rol": "remitente",
+      "id": "1930301a-6455-460f-b4c8-65d4be22e534"
     }
   ],
   "envios": [
