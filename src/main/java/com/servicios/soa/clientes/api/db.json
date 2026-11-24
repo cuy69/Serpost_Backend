@@ -1,87 +1,20 @@
 {
-  "clientes": [],
+  "clientes": [
+    {
+      "tipo_documento": "DNI",
+      "numero_documento": "77722200",
+      "nombres": "Lara Baca",
+      "direccion": "Av. Siempre viva 12",
+      "telefono": "999888666",
+      "correo": "prueba@gmail.com",
+      "rol": "destinatario",
+      "id": "970391d6-de48-4204-a51d-5755b57301b7"
+    }
+  ],
   "envios": [
     {
-      "id_remitente": "UUID-del-remitente-creado-en-Cliente",
-      "id_destinatario": "UUID-del-destinatario-creado-en-Cliente",
-      "peso_kg": 2.5,
-      "contenido": "Documentos",
-      "linea_negocio": "Encomienda",
-      "origen": "Chimbote",
-      "destino": "Lima",
-      "id": "WkiEsOCzNCQ",
       "estado": "ENTREGADO",
-      "simulacion_log": "Estado actualizado a ENTREGADO",
-      "ida_vuelta": false
-    },
-    {
-      "id_remitente": "1313131313",
-      "id_destinatario": "353535535",
-      "peso_kg": 2.6,
-      "contenido": "Documentos",
-      "linea_negocio": "Encomienda",
-      "origen": "Chimbote",
-      "destino": "Lima",
-      "id": "PTSBzZd7DcM",
-      "estado": "ENTREGADO",
-      "simulacion_log": "Estado actualizado a ENTREGADO",
-      "ida_vuelta": false
-    },
-    {
-      "estado": "REGISTRADO",
-      "id": "c8a74e11-4011-4d78-a3b8-7833e2e25e2a",
-      "peso_kg": 2.5,
-      "destino": "Lima Cercado 101",
-      "servicio": "ESTANDAR",
-      "zona": "NACIONAL",
-      "ida_vuelta": false
-    },
-    {
-      "estado": "ENTREGADO",
-      "id": "b46cfe55-6cd4-4138-a0e6-2c803b554f3d"
-    },
-    {
-      "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
-      "id_destinatario": "a1957e60-826e-4f4c-9a52-53ec0f9a8b21",
-      "peso_kg": 2.5,
-      "contenido": "Documentos",
-      "linea_negocio": "Encomienda",
-      "origen": "Lima",
-      "destino": "Cusco",
-      "id": "20e7daab-552e-454f-bd7f-a6b06e05bf8d",
-      "estado": "REGISTRADO",
-      "servicio": "ESTANDAR",
-      "zona": "NACIONAL",
-      "ida_vuelta": false
-    },
-    {
-      "id_remitente": "a1111111-1111-4111-8111-111111111111",
-      "id_destinatario": "b2222222-2222-4222-8222-222222222222",
-      "peso_kg": 1.7,
-      "contenido": "Ropa",
-      "linea_negocio": "Encomienda",
-      "origen": "Lima",
-      "destino": "Arequipa",
-      "id": "a6362bb5-8435-4ff6-9c98-9913aff6fcbc",
-      "estado": "REGISTRADO",
-      "servicio": "ESTANDAR",
-      "zona": "NACIONAL",
-      "ida_vuelta": false
-    },
-    {
-      "id_remitente": "8d4f9a2c-0e3b-4f61-9c72-5a1b3d7e8f90",
-      "id_destinatario": "a1957e60-826e-4f4c-9a52-53ec0f9a8b21",
-      "peso_kg": 2.5,
-      "contenido": "Libros escolares",
-      "linea_negocio": "Encomienda",
-      "origen": "Chimbote",
-      "destino": "Lima",
-      "id": "a0ba1de7-4cee-4b18-ac2e-020f5b9fccd2",
-      "estado": "COTIZADO",
-      "servicio": "ESTANDAR",
-      "zona": "NACIONAL",
-      "ida_vuelta": false,
-      "tarifa_total": 27.66
+      "id": "0d25d848-58d4-42f5-b713-8c98a6a2904e"
     }
   ],
   "contenidos_prohibidos": [
