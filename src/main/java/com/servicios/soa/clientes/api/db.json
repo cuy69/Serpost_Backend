@@ -159,46 +159,6 @@
       "correo": "carlos.mendoza@example.com",
       "rol": "remitente",
       "id": "45e03df1-e3ce-4de6-b82d-def3111491ba"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "44142969",
-      "nombres": "Ana Perez Actualizada",
-      "direccion": "Calle Principal 123",
-      "telefono": "912345678",
-      "correo": "ana.142969@example.com",
-      "rol": "remitente",
-      "id": "80f2bbd0-2925-44bf-98ae-07f52548f6f1"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "77286474",
-      "nombres": "Leonardo Lolo Tavera Anton",
-      "direccion": "Calle Los Pinos 123",
-      "telefono": "923907528",
-      "correo": "Elmasrapido@gmail.com",
-      "rol": "remitente",
-      "id": "56298832-77dc-4135-87e5-90732ff43c39"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "20202021",
-      "nombres": "Jose Agustino Leon Valderrama",
-      "direccion": "Av Dragon del ma 124",
-      "telefono": "975647875",
-      "correo": "Eduadro@gmail.com",
-      "rol": "destinatario",
-      "id": "cc6ec6e6-5cce-4eba-84cf-5a92247f292c"
-    },
-    {
-      "tipo_documento": "DNI",
-      "numero_documento": "47895125",
-      "nombres": "Eli Vali Nostradamus Opordios",
-      "direccion": "La perla 234",
-      "telefono": "977811245",
-      "correo": "Leonardito@gmail.com",
-      "rol": "destinatario",
-      "id": "537af3be-89c4-4b83-8dd3-e2d20cb9519b"
     }
   ],
   "envios": [
