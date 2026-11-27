@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +19,11 @@ import java.util.UUID;
 public class EnvioController {
     private final EnvioService service;
     public EnvioController(EnvioService service) { this.service = service; }
+
+    @GetMapping
+    public List<EnvioResponse> listar() {
+        return service.listar();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

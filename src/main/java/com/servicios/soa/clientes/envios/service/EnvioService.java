@@ -46,6 +46,10 @@ public class EnvioService {
         }
     }
 
+    public java.util.List<EnvioResponse> listar() {
+        return envios.findAll().stream().map(EnvioResponse::from).toList();
+    }
+
     public EnvioResponse consultar(UUID id) {
         return envios.findById(id).map(EnvioResponse::from)
                 .orElseThrow(() -> new EnvioServiceException(HttpStatus.NOT_FOUND, "Envío no encontrado."));

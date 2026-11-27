@@ -39,6 +39,11 @@ public class ClienteService {
     }
 
     @Transactional(readOnly = true)
+    public java.util.List<Cliente> listar() {
+        return repository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Cliente consultar(@NonNull UUID idCliente) {
         return repository.findById(idCliente).orElseThrow(ClienteNotFoundException::new);
     }
@@ -65,5 +70,10 @@ public class ClienteService {
         } catch (DataIntegrityViolationException exception) {
             throw new ClienteDuplicadoException();
         }
+    }
+
+    @Transactional
+    public void eliminar(UUID idCliente) {
+        repository.delete(consultar(idCliente));
     }
 }

@@ -7,6 +7,7 @@ import com.servicios.soa.clientes.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +26,11 @@ public class ClienteController {
 
     public ClienteController(ClienteService service) {
         this.service = service;
+    }
+
+    @GetMapping
+    public List<ClienteDetailsResponse> listar() {
+        return service.listar().stream().map(ClienteDetailsResponse::from).toList();
     }
 
     @PostMapping
@@ -41,5 +48,11 @@ public class ClienteController {
     public ClienteResponse actualizar(@PathVariable("id_cliente") UUID idCliente,
                                       @Valid @RequestBody ClienteRequest request) {
         return service.actualizar(idCliente, request);
+    }
+
+    @DeleteMapping("/{id_cliente}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable("id_cliente") UUID idCliente) {
+        service.eliminar(idCliente);
     }
 }
