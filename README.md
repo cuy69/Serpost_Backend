@@ -27,7 +27,7 @@ El backend usa PostgreSQL 18 para clientes, envíos, reglas de contenido, cobros
 
 La URL, el usuario y la contraseña de la aplicación se pueden cambiar con `DATABASE_URL`, `DATABASE_USERNAME` y `DATABASE_PASSWORD`. Compose admite `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` y `POSTGRES_PORT`. El volumen `postgres_data` conserva los datos al reiniciar el contenedor; `docker compose down -v` lo elimina. Flyway aplica migraciones versionadas al arrancar y Hibernate valida el esquema.
 
-Define `SERPOST_DB_PASSWORD` en `.env`; Compose la usa para inicializar PostgreSQL y para conectar el backend. El valor se aplica al inicializar un volumen vacío; cambiarlo después no cambia la contraseña guardada en una base existente.
+Usa el mismo valor para `POSTGRES_PASSWORD` y `DATABASE_PASSWORD` en `.env`. La imagen de PostgreSQL aplica `POSTGRES_PASSWORD` solo al inicializar un volumen vacío; cambiar la variable después no cambia la contraseña guardada en la base.
 
 Para detener los servicios usa `docker compose down`; los datos persisten en `postgres_data`. `docker compose down -v` también elimina la base local.
 

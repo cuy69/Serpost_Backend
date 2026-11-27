@@ -19,6 +19,7 @@ public class LocalTarifaSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/tarifas/calculos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/clientes/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/notificaciones").permitAll()
                         .requestMatchers(HttpMethod.GET, "/notificaciones/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cobros").permitAll()
