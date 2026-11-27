@@ -6,6 +6,7 @@ import com.servicios.soa.clientes.service.ClienteDuplicadoException;
 import com.servicios.soa.clientes.service.ClienteNotFoundException;
 import com.servicios.soa.clientes.guias.service.GuiaServiceException;
 import com.servicios.soa.clientes.guias.service.GuiaNotFoundException;
+import com.servicios.soa.clientes.envios.service.EnvioServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -59,6 +60,11 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(CobroException.class)
     public ResponseEntity<ApiError> handleCobro(CobroException exception) {
+        return response(exception.getStatus(), exception.getMessage(), Map.of());
+    }
+
+    @ExceptionHandler(EnvioServiceException.class)
+    public ResponseEntity<ApiError> handleEnvio(EnvioServiceException exception) {
         return response(exception.getStatus(), exception.getMessage(), Map.of());
     }
 

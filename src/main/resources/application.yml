@@ -2,14 +2,15 @@ spring:
   application:
     name: GestionarCliente
   datasource:
-    url: jdbc:h2:mem:clientes;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/serpost}
+    username: ${DATABASE_USERNAME:serpost}
+    password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     open-in-view: false
+  flyway:
+    enabled: true
   security:
     oauth2:
       resourceserver:
@@ -22,8 +23,6 @@ server:
       forwarded:
         strategy: framework
 serpost:
-  envios:
-    base-url: ${SERPOST_ENVIOS_BASE_URL:http://127.0.0.1:3001}
   notificaciones:
     intervalo-procesamiento-ms: 250
     reintentos:
@@ -41,10 +40,5 @@ serpost:
         tasa-igv: 18
         moneda: PEN
 services:
-  envios:
-    base-url: ${ENVIOS_BASE_URL:http://localhost:3001}
-  cobros:
-    base-url: ${COBROS_BASE_URL:http://127.0.0.1:8080}
   guias:
     tracking-base-url: ${GUIAS_TRACKING_BASE_URL:http://localhost:8080/guias}
-    database-path: ${GUIAS_DB_PATH:src/main/java/com/servicios/soa/clientes/api/guias.json}

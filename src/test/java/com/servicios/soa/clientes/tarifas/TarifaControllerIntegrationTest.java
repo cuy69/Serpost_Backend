@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,6 +31,7 @@ import static java.util.Objects.requireNonNull;
         "serpost.tarifas.reglas[0].moneda=PEN"
 })
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class TarifaControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;

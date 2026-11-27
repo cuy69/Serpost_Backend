@@ -17,7 +17,7 @@ import static java.util.Objects.requireNonNull;
 
 @SpringBootTest(properties = "spring.security.oauth2.resourceserver.jwt.issuer-uri=https://issuer.example")
 @AutoConfigureMockMvc
-@ActiveProfiles("local")
+@ActiveProfiles({"local", "test"})
 class TarifaLocalProfileIntegrationTest {
     @Autowired
     private MockMvc mockMvc;

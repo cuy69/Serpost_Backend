@@ -1,43 +1,43 @@
 # GestionarCliente
 
-Servicio REST síncrono en Java 25 y Spring Boot para registrar, actualizar y consultar clientes.
+Backend REST en Java 25 y Spring Boot con PostgreSQL 18.
 
 ## Requisitos
 
-- Java 25 o superior
-- Maven 3.9 o superior
-- Un proveedor OAuth 2.0 / OpenID Connect que emita JWT
+- Docker Desktop con Docker Compose
+
+No necesitas instalar Java ni Maven para ejecutar el entorno local; Docker construye y ejecuta la aplicación.
 
 ## Configuración y ejecución
 
-Configura `OAUTH_ISSUER_URI` con el issuer de tu proveedor de identidad y ejecuta:
+Desde la raíz del proyecto, crea tu archivo de configuración local y levanta la aplicación y PostgreSQL:
 
 ```powershell
-$env:OAUTH_ISSUER_URI = "https://identidad.ejemplo.com/issuer"
-mvn spring-boot:run
+Copy-Item .env.example .env
+docker compose up --build
 ```
 
-Si la variable no se define, la aplicación usa un valor de respaldo `https://issuer.example` para que pueda arrancar en entornos locales sin bloquear el proceso de desarrollo. En producción, reemplázalo por tu issuer real.
+La primera construcción descarga dependencias y puede tardar unos minutos. La API queda en `http://localhost:8081`, así no choca con otros proyectos que usen el puerto `8080`. Compose activa el perfil `local`, pensado solo para desarrollo; modifica `.env` si necesitas ajustar la configuración. Para cambiar el puerto del host, define `BACKEND_PORT` en `.env`.
 
-Para iniciar el API simulado que persiste en `db.json` y rechaza solicitudes duplicadas, ejecuta desde `src/main/java/com/servicios/soa/clientes/api`:
+Fuera del perfil local, la API valida los JWT Bearer usando los metadatos/JWK del issuer y requiere autenticación. En producción, configura un issuer real y publica el servicio únicamente detrás de HTTPS.
 
-cd src\main\java\com\servicios\soa\clientes\api
+El backend usa PostgreSQL 18 para clientes, envíos, reglas de contenido, cobros, guías y notificaciones.
 
-```powershell
-npm start
-```
+## PostgreSQL 18
 
-Los `POST` duplicados y las actualizaciones `PUT`/`PATCH` que crearían duplicados responden `409 Conflict`: en clientes se compara tipo y número de documento; en envíos, todos los datos excepto `id`. Usa este comando en lugar de `npx json-server db.json` para que se aplique la validación.
+La URL, el usuario y la contraseña de la aplicación se pueden cambiar con `DATABASE_URL`, `DATABASE_USERNAME` y `DATABASE_PASSWORD`. Compose admite `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` y `POSTGRES_PORT`. El volumen `postgres_data` conserva los datos al reiniciar el contenedor; `docker compose down -v` lo elimina. Flyway aplica migraciones versionadas al arrancar y Hibernate valida el esquema.
 
-La API valida los JWT Bearer usando los metadatos/JWK del issuer. Todas las rutas requieren autenticación. En producción, publica el servicio únicamente detrás de HTTPS (por ejemplo, con un proxy inverso que termine TLS); no envíes tokens ni datos personales por HTTP sin cifrar.
+Define `SERPOST_DB_PASSWORD` en `.env`; Compose la usa para inicializar PostgreSQL y para conectar el backend. El valor se aplica al inicializar un volumen vacío; cambiarlo después no cambia la contraseña guardada en una base existente.
 
-La base H2 está en memoria para facilitar la ejecución local y se reinicia al detener la aplicación. Para persistencia de producción, configura una base de datos administrada y credenciales mediante variables de entorno.
+Para detener los servicios usa `docker compose down`; los datos persisten en `postgres_data`. `docker compose down -v` también elimina la base local.
+
+Los archivos JSON heredados ya no son leídos ni escritos por el backend. Sus datos no se importan automáticamente a PostgreSQL.
 
 ## API
 
-Base URL: `http://localhost:8080`
+Base URL: `http://localhost:8081`
 
-Envía el encabezado `Authorization: Bearer <access_token>` en cada solicitud. El campo `tipo_documento` admite `DNI`, `RUC`, `CE` o `pasaporte`; `rol` admite `remitente` o `destinatario`.
+Fuera del perfil local, envía `Authorization: Bearer <access_token>` en cada solicitud. El campo `tipo_documento` admite `DNI`, `RUC`, `CE` o `pasaporte`; `rol` admite `remitente` o `destinatario`.
 
 ### Registrar cliente
 
@@ -89,15 +89,9 @@ Respuesta:
 
 Los errores de la API contienen `timestamp`, `status`, `error`, `mensaje` y `campos` (con errores de validación por campo).
 
-## RegistrarEnvío con almacenamiento JSON
+## Registrar y consultar envíos
 
-La API local de Postman se ejecuta desde `src/main/java/com/servicios/soa/clientes/api` con `npm start` y escucha en `http://localhost:3001`.
-
-- `POST /envios` valida UUIDs, peso positivo, contenido, línea de negocio, origen y destino; guarda el envío en `db.json` y responde `201` con `id_envio` y `estado`.
-- `GET /envios/{id_envio}` devuelve los datos persistidos. Un ID mal formado responde `400` y uno inexistente `404`.
-- Los campos inválidos se devuelven juntos con `400`. El contenido se compara sin distinguir mayúsculas ni tildes contra `contenidos_prohibidos` en `db.json`; una coincidencia activa responde `422` con categoría y palabra clave. Un fallo al escribir el archivo responde `503`.
-
-La lista JSON inicial contiene las palabras clave de las seis categorías de contenido prohibido.
+`POST /envios` guarda el envío en PostgreSQL y `GET /envios/{id_envio}` lo consulta. El registro requiere peso positivo, contenido, línea de negocio, origen y destino. Las reglas iniciales de contenido prohibido se insertan con la migración Flyway y la comparación ignora mayúsculas y tildes; una coincidencia devuelve `422`. Un duplicado devuelve `409`.
 
 ## Calcular tarifa de envío
 
@@ -129,7 +123,7 @@ Para probar tarifas y notificaciones localmente sin un proveedor OAuth, inicia c
 - `POST /notificaciones` acepta avisos y devuelve `202 Accepted` con `notificacion_id`, `estado` y `fecha_envio`. El estado inicial es `pendiente`; consulta `GET /notificaciones/{notificacion_id}` para ver el resultado del procesamiento asíncrono.
 - Los tipos admitidos son `correccion_datos`, `restriccion_contenido` y `problema_pago`; los canales son `correo`, `sms` y `mensajeria`. Correo usa el email del cliente; SMS y mensajería usan su teléfono.
 - `campos_invalidos` es obligatorio para correcciones. Para restricciones y problemas de pago son obligatorios `envio_id` y `motivo`. Cuando se omite `mensaje`, se genera una plantilla en español.
-- Si se proporciona `envio_id`, se valida mediante `SERPOST_ENVIOS_BASE_URL` (por defecto `http://127.0.0.1:3001`). Inicia el API JSON con `npm start` desde `src/main/java/com/servicios/soa/clientes/api`.
+- Si se proporciona `envio_id`, se valida directamente contra los envíos guardados en PostgreSQL.
 - En perfil `local`, el adaptador simula la entrega y no envía correo, SMS ni mensajes reales. Fuera de ese perfil no se ha configurado un proveedor: `POST` devuelve `503` con el ID creado y estado `pendiente`, y las notificaciones se reintentan hasta el límite `serpost.notificaciones.reintentos.maximo` (por defecto 3). Consulta el ID para revisar el estado; los intentos se auditan en la base de datos.
 - El contrato actual registra los campos inválidos y los intentos, pero no incluye valores anteriores/nuevos de los datos corregidos; para auditar versiones de datos (RNF-04.2) se debe ampliar la solicitud con esas versiones.
 - El perfil local permite `POST /clientes` para crear el cliente de prueba. Usa el `id_cliente` de la respuesta en la notificación. Todas estas excepciones de seguridad local solo aplican al perfil `local`.
@@ -140,9 +134,9 @@ Para probar tarifas y notificaciones localmente sin un proveedor OAuth, inicia c
 
 El servicio Java también expone `POST /guias` y `GET /guias/{codigo_guia}`. Para emitir una guía, consulta el envío en `GET /envios/{id_envio}` y el cobro en `GET /cobros/{id_cobro}`; solo la guarda si Cobro responde `estado_pago: "aprobado"`. La guía queda asociada de forma única al envío.
 
-Configura las direcciones de los servicios dependientes con `ENVIOS_BASE_URL` y `COBROS_BASE_URL`. Los valores locales predeterminados son `http://localhost:3001` y `http://127.0.0.1:8080`. La URL que devuelve para seguimiento se configura con `GUIAS_TRACKING_BASE_URL` (predeterminado: `http://localhost:8080/guias`). El token Bearer entrante se reenvía a ambos servicios.
+Envíos, cobros y guías consultan PostgreSQL dentro de la misma aplicación. En Compose, la URL de seguimiento apunta a `http://localhost:8081/guias`.
 
-Solicitud para Postman (`POST http://localhost:8080/guias`, con `Authorization: Bearer <access_token>`):
+Solicitud para Postman (`POST http://localhost:8081/guias`, con `Authorization: Bearer <access_token>`):
 
 ```json
 {
@@ -151,9 +145,9 @@ Solicitud para Postman (`POST http://localhost:8080/guias`, con `Authorization: 
 }
 ```
 
-La respuesta `201 Created` incluye `codigo_guia`, `url_seguimiento` y `fecha_emision`. Usa el código devuelto en `GET http://localhost:8080/guias/{codigo_guia}` para consultar la guía. Si un servicio dependiente no está disponible, responde `503`; un pago no aprobado responde `422`.
+La respuesta `201 Created` incluye `codigo_guia`, `url_seguimiento` y `fecha_emision`. Usa el código devuelto en `GET http://localhost:8081/guias/{codigo_guia}` para consultar la guía. Si un servicio dependiente no está disponible, responde `503`; un pago no aprobado responde `422`.
 
-Las guias se guardan en `src/main/java/com/servicios/soa/clientes/api/guias.json`, junto a `db.json`. El archivo se crea al iniciar si todavia no existe. Puedes cambiar la ubicacion con `GUIAS_DB_PATH`. La base H2 en memoria sigue siendo la persistencia del servicio Java de clientes.
+Las guías se guardan en la tabla `guias` de PostgreSQL.
 
 ### Prueba local sin OAuth
 
@@ -161,8 +155,8 @@ Para pruebas locales de Postman puedes iniciar Spring Boot con el perfil `local`
 
 ## Registrar y consultar cobros
 
-El servicio Java expone `POST /cobros` para registrar pagos y `GET /cobros/{id_cobro}` para consultarlos. Los registros se guardan en la tabla `cobros` de H2 junto con monto, moneda, medio, referencia, estado y fecha. La H2 actual es en memoria; los cobros se reinician al detener la aplicación.
+El servicio Java expone `POST /cobros` para registrar pagos y `GET /cobros/{id_cobro}` para consultarlos. Los registros se guardan en la tabla `cobros` de PostgreSQL junto con monto, moneda, medio, referencia, estado y fecha.
 
 En modo local, usa **No Auth** en Postman. Para registrar un pago, envía `id_envio`, `monto` positivo, moneda de tres letras, `medio_pago` (`efectivo`, `tarjeta` o `transferencia`) y `referencia_operacion` para pagos digitales. El servicio devuelve `id_cobro`, `estado_pago` y `fecha_hora`. Una referencia igual a `RECHAZADO` simula un rechazo para probar el `422`; el proyecto no está conectado a una pasarela bancaria real.
 
-Guía consulta Cobros en `http://127.0.0.1:8080` de forma predeterminada, porque ambos módulos corren en esta aplicación. Puedes cambiarlo con `COBROS_BASE_URL`. En producción, `POST /cobros` requiere un JWT con `SCOPE_cajero`, `ROLE_CAJERO`, `SCOPE_servicio_autorizado` o `ROLE_SERVICIO_AUTORIZADO`.
+Guías consulta Cobros desde la misma base de datos. En producción, `POST /cobros` requiere un JWT con `SCOPE_cajero`, `ROLE_CAJERO`, `SCOPE_servicio_autorizado` o `ROLE_SERVICIO_AUTORIZADO`.

@@ -23,6 +23,8 @@ public class LocalTarifaSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/notificaciones/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cobros").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cobros/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/envios").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/envios/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/guias").permitAll()
                         .requestMatchers(HttpMethod.GET, "/guias/**").permitAll()
                         .anyRequest().authenticated())

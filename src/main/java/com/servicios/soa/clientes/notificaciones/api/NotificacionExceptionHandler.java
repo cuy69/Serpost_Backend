@@ -4,7 +4,6 @@ import com.servicios.soa.clientes.api.dto.ApiError;
 import com.servicios.soa.clientes.notificaciones.service.CanalContactoNoDisponibleException;
 import com.servicios.soa.clientes.notificaciones.service.EnvioNoEncontradoException;
 import com.servicios.soa.clientes.notificaciones.service.NotificacionNoEncontradaException;
-import com.servicios.soa.clientes.notificaciones.service.ServicioEnvioNoDisponibleException;
 import com.servicios.soa.clientes.notificaciones.service.SolicitudNotificacionInvalidaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +26,9 @@ public class NotificacionExceptionHandler {
         return response(HttpStatus.UNPROCESSABLE_CONTENT, exception.getMessage());
     }
 
-    @ExceptionHandler({ServicioEnvioNoDisponibleException.class, SolicitudNotificacionInvalidaException.class})
+    @ExceptionHandler(SolicitudNotificacionInvalidaException.class)
     public ResponseEntity<ApiError> handleUnavailable(RuntimeException exception) {
-        HttpStatus status = exception instanceof SolicitudNotificacionInvalidaException
-                ? HttpStatus.BAD_REQUEST
-                : HttpStatus.SERVICE_UNAVAILABLE;
-        return response(status, exception.getMessage());
+        return response(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
     private ResponseEntity<ApiError> response(HttpStatus status, String message) {
