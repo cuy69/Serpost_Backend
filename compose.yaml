@@ -33,6 +33,7 @@ services:
       SPRING_FLYWAY_PASSWORD: ${SERPOST_DB_PASSWORD:?Define SERPOST_DB_PASSWORD en .env}
       OAUTH_ISSUER_URI: ${OAUTH_ISSUER_URI:-https://issuer.example}
       GUIAS_TRACKING_BASE_URL: http://localhost:${BACKEND_PORT:-8081}/guias
+      
     ports:
       - "${BACKEND_PORT:-8081}:8080"
     depends_on:
