@@ -17,7 +17,19 @@ Copy-Item .env.example .env
 docker compose up --build
 ```
 
-La primera construcción descarga dependencias y puede tardar unos minutos. La API queda en `http://localhost:8081`, así no choca con otros proyectos que usen el puerto `8080`. Compose activa el perfil `local`, pensado solo para desarrollo; modifica `.env` si necesitas ajustar la configuración. Para cambiar el puerto del host, define `BACKEND_PORT` en `.env`.
+La primera construcción descarga dependencias y puede tardar unos minutos. La API queda en `http://localhost:8081`, así no choca con otros proyectos que usen el puerto `8080`. Compose activa el perfil `local`, pensado para desarrollo y pruebas en una red de confianza. Para cambiar el puerto del host, define `BACKEND_PORT` en `.env`.
+
+### Acceso desde las computadoras de colaboradores
+
+Ejecuta Docker Compose y PostgreSQL en una sola computadora que permanecerá encendida: esa será la computadora anfitriona y allí quedará la base compartida. Las demás computadoras envían sus solicitudes HTTP a la API del anfitrión; no instales ni ejecutes otra copia de PostgreSQL para cada colaborador. Los cambios guardados por la API estarán disponibles en la misma base y se verán al consultar de nuevo desde pgAdmin en el anfitrión.
+
+1. Conecta los equipos a la misma red local. En el anfitrión, ejecuta `ipconfig` y anota su dirección IPv4 (por ejemplo, `192.168.1.50`). Conviene reservar esa dirección en el router para que no cambie.
+2. En el `.env` del anfitrión, configura `GUIAS_TRACKING_BASE_URL=http://192.168.1.50:8081/guias`, sustituyendo la IP por la real. Configura también una contraseña propia en `SERPOST_DB_PASSWORD`; no uses la contraseña de ejemplo para compartir el servicio.
+3. Inicia o reinicia los contenedores con `docker compose up --build -d`.
+4. Permite el puerto TCP `8081` en el Firewall de Windows para la red privada/local. No abras ni reenvíes el puerto `5432`: PostgreSQL queda publicado solo en `127.0.0.1` del anfitrión.
+5. En Postman de cada colaborador, usa `http://192.168.1.50:8081` como URL base (con la IP real del anfitrión). Por ejemplo, `POST http://192.168.1.50:8081/clientes`. Las solicitudes y consultas deben apuntar siempre a esa misma dirección.
+
+El perfil `local` permite algunas operaciones sin autenticación; úsalo solo en una red privada y de confianza, nunca lo publiques en Internet. Las demás rutas requieren un issuer OAuth/JWT real. Para uso productivo o acceso desde fuera de la oficina, configura autenticación y HTTPS en un servidor desplegado; no expongas directamente este perfil de desarrollo.
 
 Fuera del perfil local, la API valida los JWT Bearer usando los metadatos/JWK del issuer y requiere autenticación. En producción, configura un issuer real y publica el servicio únicamente detrás de HTTPS.
 
@@ -35,7 +47,7 @@ Los archivos JSON heredados ya no son leídos ni escritos por el backend. Sus da
 
 ## API
 
-Base URL: `http://localhost:8081`
+URL base local: `http://localhost:8081`. Desde otra computadora, reemplaza `localhost` por la IPv4 del anfitrión, por ejemplo `http://192.168.1.50:8081`.
 
 Fuera del perfil local, envía `Authorization: Bearer <access_token>` en cada solicitud. El campo `tipo_documento` admite `DNI`, `RUC`, `CE` o `pasaporte`; `rol` admite `remitente` o `destinatario`.
 
@@ -134,7 +146,7 @@ Para probar tarifas y notificaciones localmente sin un proveedor OAuth, inicia c
 
 El servicio Java también expone `POST /guias` y `GET /guias/{codigo_guia}`. Para emitir una guía, consulta el envío en `GET /envios/{id_envio}` y el cobro en `GET /cobros/{id_cobro}`; solo la guarda si Cobro responde `estado_pago: "aprobado"`. La guía queda asociada de forma única al envío.
 
-Envíos, cobros y guías consultan PostgreSQL dentro de la misma aplicación. En Compose, la URL de seguimiento apunta a `http://localhost:8081/guias`.
+Envíos, cobros y guías consultan PostgreSQL dentro de la misma aplicación. Configura `GUIAS_TRACKING_BASE_URL` en `.env` para que los enlaces de seguimiento devueltos también apunten a la dirección accesible por los colaboradores, por ejemplo `http://192.168.1.50:8081/guias`.
 
 Solicitud para Postman (`POST http://localhost:8081/guias`, con `Authorization: Bearer <access_token>`):
 

@@ -32,8 +32,12 @@ services:
       SPRING_FLYWAY_USER: ${POSTGRES_USER:-serpost}
       SPRING_FLYWAY_PASSWORD: ${SERPOST_DB_PASSWORD:?Define SERPOST_DB_PASSWORD en .env}
       OAUTH_ISSUER_URI: ${OAUTH_ISSUER_URI:-https://issuer.example}
+<<<<<<< HEAD
       GUIAS_TRACKING_BASE_URL: http://localhost:${BACKEND_PORT:-8081}/guias
       
+=======
+      GUIAS_TRACKING_BASE_URL: ${GUIAS_TRACKING_BASE_URL:-http://localhost:8081/guias}
+>>>>>>> 8199d7456e76779ea31fdd1c641b529a0a2c678d
     ports:
       - "${BACKEND_PORT:-8081}:8080"
     depends_on:
